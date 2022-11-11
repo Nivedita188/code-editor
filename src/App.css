@@ -105,6 +105,19 @@ footer a:hover {
   flex: 1;
 }
 
+.inoutBox {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  height: 20rem;
+  font-size: 1.3rem;
+  background-color: #494d6173;
+  padding: 1rem 0 0 1rem;
+  resize: none;
+  border: none;
+  color: aliceblue;
+}
+
 .clientsList {
   display: flex;
   align-items: center;
@@ -136,8 +149,29 @@ footer a:hover {
   margin-top: 20px;
 }
 .CodeMirror {
-  min-height: calc(100vh - 20px);
+  min-height: calc(100vh - 25rem);
   font-size: 20px;
   line-height: 1.6;
   padding-top: 20px;
+}
+
+.inout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.runBtn {
+  background-color: rgb(37, 80, 235);
+  margin-bottom: 5rem;
+}
+
+select {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+select:focus{
+  outline:none;
 }

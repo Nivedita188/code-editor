@@ -4,6 +4,9 @@ import ACTIONS from '../Actions';
 import Client from '../components/Client';
 import Editor from '../components/Editor';
 import { initSocket } from '../socket';
+import '../App.css';
+import axios from "axios";
+
 import {
     useLocation,
     useNavigate,
@@ -87,6 +90,29 @@ const EditorPage = () => {
         reactNavigator('/');
     }
 
+    function run() {
+        var lang = document.getElementById("language").value
+        var input = document.getElementById("in").value
+        
+        console.log(input, codeRef.current)
+
+        const x = {
+            code: codeRef.current,
+            input: input,
+            lang: lang,
+        };
+
+        axios
+            .post("https://code-editor-backend-cu.herokuapp.com/compile/", x)
+            .then((response) => {
+                var outputText = document.getElementById("out").value = response.data.output;
+                console.log(outputText)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     if (!location.state) {
         return <Navigate to="/" />;
     }
@@ -112,6 +138,16 @@ const EditorPage = () => {
                         ))}
                     </div>
                 </div>
+
+                <select name="language" id="language">
+                    <option value="cpp17" selected>C++</option>
+                    <option value="java">Java</option>
+                    <option value="python3">Python</option>
+                </select>
+
+                <button className="btn runBtn" onClick={run}>
+                    Compile & Run
+                </button>
                 <button className="btn copyBtn" onClick={copyRoomId}>
                     Copy ROOM ID
                 </button>
@@ -127,6 +163,11 @@ const EditorPage = () => {
                         codeRef.current = code;
                     }}
                 />
+                <div className="inout">
+                    <textarea id="in" className='inoutBox' placeholder="Input"></textarea>
+                    <textarea id="out" className='inoutBox' placeholder='Output' readOnly></textarea>
+                </div>
+                
             </div>
         </div>
     );

@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const path = require('path');
+var request = require("request");
+var cors = require('cors');
 const { Server } = require('socket.io');
 const ACTIONS = require('./src/Actions');
 
@@ -12,6 +14,27 @@ app.use(express.static('build'));
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+const code = `#include <iostream>
+                using namespace std;
+                int main() {
+                    int x=10;
+                    int y=25;
+                    int z=x+y;
+                    cout<<"Sum of x+y = " << z;
+                }`;
+
+// const proxyurl = "https://cors-anywhere.herokuapp.com/";
+const url = "https://api.jdoodle.com/v1/execute";
+
+// production
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("app/build"));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "app", "build", "index.html"));
+    });
+}
 
 const userSocketMap = {};
 function getAllConnectedClients(roomId) {
