@@ -30,10 +30,12 @@ const url = "https://api.jdoodle.com/v1/execute";
 // production
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static("app/build"));
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "app", "build", "index.html"));
-    });
+    // app.use(express.static("app/build"));
+    // app.get("*", (req, res) => {
+    //     res.sendFile(path.resolve(__dirname, "app", "build", "index.html"));
+    // });
+
+    app.use(express.static(path.join(__dirname + "/public")));
 }
 
 const userSocketMap = {};
